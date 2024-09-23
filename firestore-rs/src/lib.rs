@@ -72,7 +72,7 @@
 //!       })
 //!       .execute()
 //!      .await?;
-//!  
+//!
 //!   // Get a document as an object by id
 //!   let find_it_again: Option<MyTestStructure> = db.fluent()
 //!         .select()
@@ -136,7 +136,6 @@ pub use firestore_serde::*;
 
 mod struct_path_macro;
 use crate::errors::FirestoreError;
-pub use struct_path_macro::*;
 
 pub mod timestamp_utils;
 
