@@ -5,6 +5,8 @@
 credentials.json
 /docker/mysql/
 /docker/redis/
+.devcontainer/
+.github/dependabot.yml
 
 # firestore
 /firestore-rs/target/

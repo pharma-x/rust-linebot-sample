@@ -28,7 +28,7 @@ async fn main() {
 
     tracing::debug!("Server listening on {}", addr);
 
-    axum::Server::bind(&addr)
+    axum_server::bind(addr)
         .serve(app.into_make_service())
         .await
         .unwrap_or_else(|_| panic!("Server cannot launch!"))
