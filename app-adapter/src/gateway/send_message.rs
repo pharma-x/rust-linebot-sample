@@ -36,10 +36,12 @@ impl SendMessageGateway for HttpClientRepositoryImpl<SendMessage> {
                 // todo 作成は上のレイヤーでする
                 let create_message = CreateSendMessage::from_event(event);
                 let requests = create_message.into_chunked_requests(line_user_auth.auth_id.0);
+                println!("Requests: {:?}", requests);
                 self.send_line_messages(line_user_auth.auth_token, sender, requests)
                     .await?
             }
         };
+        println!("messages: {:?}", messages);
         Ok(messages)
     }
 }
@@ -82,6 +84,7 @@ impl HttpClientRepositoryImpl<SendMessage> {
         sender: Option<NewSendSender>,
         message_request: ReplySendMessageRequest,
     ) -> anyhow::Result<NewSendMessages> {
+        println!("message_request: {:?}", message_request);
         let body = self
             .client
             .post("https://api.line.me/v2/bot/message/reply")
@@ -92,7 +95,7 @@ impl HttpClientRepositoryImpl<SendMessage> {
             .await?
             .text()
             .await?;
-
+        println!("body: {:?}", body);
         let sent_messages: SentMessagesResponse = serde_json::from_str(&body).map_err(|_| {
             anyhow!(GatewayError::FailedConvertResponse(
                 body.to_string(),

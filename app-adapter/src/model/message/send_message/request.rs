@@ -45,14 +45,31 @@ impl CreateSendMessage {
             NewEvent::Follow(e) => {
                 let messages: Vec<SendMessageContentRequest> = vec![
                     SendMessageContentRequest::Text(SendMessageContentTextRequest {
-                        text: "友達登録ありがとうございます！".to_string(),
+                        text: "ようこそ。\nRustで開発したLINE botです。\n\n以下のボタンからご希望のオプションを選択してください。".to_string(),
                         emojis: None,
                         quote_token: None,
                     }),
-                    SendMessageContentRequest::Text(SendMessageContentTextRequest {
-                        text: "こんにちは！PharmaXです！！".to_string(),
-                        emojis: None,
-                        quote_token: None,
+                    SendMessageContentRequest::Template(SendMessageContentTemplateRequest {
+                        alt_text: "オプションを選択してください。".to_string(),
+                        template: SendTemplateMessageContentRequest::Buttons(SendButtonsTemplateRequest {
+                            thumbnail_image_url: None,
+                            image_aspect_ratio: None,
+                            image_size: None,
+                            image_background_color: None,
+                            title: None,
+                            text: "オプションを選択してください。".to_string(),
+                            default_action: None,
+                            actions: vec![
+                                SendTemplateActionRequest::Message(SendTemplateMessageActionRequest {
+                                    label: "こんにちは".to_string(),
+                                    text: "こんにちは".to_string(),
+                                }),
+                                SendTemplateActionRequest::Message(SendTemplateMessageActionRequest {
+                                    label: "こんばんは".to_string(),
+                                    text: "こんばんは".to_string(),
+                                }),
+                            ],
+                        }),
                     }),
                 ];
                 println!("from_event messages:{:?}", &messages);
@@ -874,7 +891,7 @@ impl From<SendImageCarouselColumn> for NewSendImageCarouselColumn {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "camelCase")]
+#[serde(tag = "type", rename_all = "camelCase")]
 pub enum SendTemplateActionRequest {
     Postback(SendTemplatePostbackActionRequest),
     Message(SendTemplateMessageActionRequest),
