@@ -45,28 +45,32 @@ impl CreateSendMessage {
             NewEvent::Follow(e) => {
                 let messages: Vec<SendMessageContentRequest> = vec![
                     SendMessageContentRequest::Text(SendMessageContentTextRequest {
-                        text: "ようこそ。\nRustで開発したLINE botです。\n\n以下のボタンからご希望のオプションを選択してください。".to_string(),
+                        text: "ようこそ。\nRustで開発したLINE botです。\n\n以下のボタンからご希望のメニューを選択してください。".to_string(),
                         emojis: None,
                         quote_token: None,
                     }),
                     SendMessageContentRequest::Template(SendMessageContentTemplateRequest {
-                        alt_text: "オプションを選択してください。".to_string(),
+                        alt_text: "選択してください。".to_string(),
                         template: SendTemplateMessageContentRequest::Buttons(SendButtonsTemplateRequest {
                             thumbnail_image_url: None,
                             image_aspect_ratio: None,
                             image_size: None,
                             image_background_color: None,
                             title: None,
-                            text: "オプションを選択してください。".to_string(),
+                            text: "選択してください。".to_string(),
                             default_action: None,
                             actions: vec![
                                 SendTemplateActionRequest::Message(SendTemplateMessageActionRequest {
-                                    label: "こんにちは".to_string(),
-                                    text: "こんにちは".to_string(),
+                                    label: "Rustの基礎を学ぶ".to_string(),
+                                    text: "Rustを基礎から学ぶには、Tour of Rustがおすすめです。環境構築不要でRustを学べます。\nhttps://tourofrust.com/00_ja.html".to_string(),
                                 }),
                                 SendTemplateActionRequest::Message(SendTemplateMessageActionRequest {
-                                    label: "こんばんは".to_string(),
-                                    text: "こんばんは".to_string(),
+                                    label: "Rustの公式ドキュメントを見る".to_string(),
+                                    text: "Rustの公式ドキュメントはこちらから閲覧できます。\nhttps://www.rust-lang.org/ja".to_string(),
+                                }),
+                                SendTemplateActionRequest::Message(SendTemplateMessageActionRequest {
+                                    label: "Rustのサンプルコードを見る".to_string(),
+                                    text: "Rustのサンプルコードを見るなら、Rust by Exampleがおすすめです。\nhttps://doc.rust-jp.rs/rust-by-example-ja/index.html".to_string(),
                                 }),
                             ],
                         }),
