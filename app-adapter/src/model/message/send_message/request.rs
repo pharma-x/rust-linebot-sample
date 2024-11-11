@@ -324,7 +324,6 @@ pub enum SendSendingMethodRequest {
     Push,
 }
 
-// TODO Flex Messageの実装
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(tag = "type")]
 #[serde(rename_all = "lowercase")]
