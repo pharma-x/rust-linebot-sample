@@ -36,7 +36,6 @@ impl SendMessageGateway for HttpClientRepositoryImpl<SendMessage> {
                 // todo 作成は上のレイヤーでする
                 let create_message = CreateSendMessage::from_event(event);
                 let requests = create_message.into_chunked_requests(line_user_auth.auth_id.0);
-                println!("Requests: {:?}", requests);
                 self.send_line_messages(line_user_auth.auth_token, sender, requests)
                     .await?
             }
