@@ -95,7 +95,6 @@ impl HttpClientRepositoryImpl<SendMessage> {
             .await?
             .text()
             .await?;
-        println!("body: {:?}", body);
         let sent_messages: SentMessagesResponse = serde_json::from_str(&body).map_err(|_| {
             anyhow!(GatewayError::FailedConvertResponse(
                 body.to_string(),
