@@ -290,7 +290,7 @@ enum LineWebhookEventMessageContent {
 struct LineWebhookEventMessageContentText {
     id: String,
     text: String,
-    emojis: Vec<LineWebhookEventEmoji>,
+    emojis: Option<Vec<LineWebhookEventEmoji>>,
     mention: Option<LineWebhookEventMention>,
 }
 
@@ -617,6 +617,7 @@ impl From<LineWebhookEventMessageContentText> for CreateEventMessageContentText 
             text: s.text,
             emojis: s
                 .emojis
+                .unwrap_or_default()
                 .iter()
                 .map(|e| CreateEventEmoji {
                     index: e.index,

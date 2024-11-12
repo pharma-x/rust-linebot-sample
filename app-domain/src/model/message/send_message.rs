@@ -38,7 +38,6 @@ pub enum SendSenderRole {
     Sender,
 }
 
-// TODO Flex Messageの実装
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum SendMessage {
     Text(SendMessageText),
@@ -375,7 +374,6 @@ pub enum NewSendSenderRole {
     Sender,
 }
 
-// TODO Flex Messageの実装
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum NewSendMessage {
     Text(NewSendMessageText),

@@ -45,14 +45,35 @@ impl CreateSendMessage {
             NewEvent::Follow(e) => {
                 let messages: Vec<SendMessageContentRequest> = vec![
                     SendMessageContentRequest::Text(SendMessageContentTextRequest {
-                        text: "友達登録ありがとうございます！".to_string(),
+                        text: "ようこそ。\nRustで開発したLINE botです。\n\n以下のボタンからご希望のメニューを選択してください。".to_string(),
                         emojis: None,
                         quote_token: None,
                     }),
-                    SendMessageContentRequest::Text(SendMessageContentTextRequest {
-                        text: "こんにちは！PharmaXです！！".to_string(),
-                        emojis: None,
-                        quote_token: None,
+                    SendMessageContentRequest::Template(SendMessageContentTemplateRequest {
+                        alt_text: "選択してください。".to_string(),
+                        template: SendTemplateMessageContentRequest::Buttons(SendButtonsTemplateRequest {
+                            thumbnail_image_url: None,
+                            image_aspect_ratio: None,
+                            image_size: None,
+                            image_background_color: None,
+                            title: None,
+                            text: "選択してください。".to_string(),
+                            default_action: None,
+                            actions: vec![
+                                SendTemplateActionRequest::Message(SendTemplateMessageActionRequest {
+                                    label: "Rustの基礎を学ぶ".to_string(),
+                                    text: "Rustを基礎から学ぶには、Tour of Rustがおすすめです。環境構築不要でRustを学べます。\nhttps://tourofrust.com/00_ja.html".to_string(),
+                                }),
+                                SendTemplateActionRequest::Message(SendTemplateMessageActionRequest {
+                                    label: "Rustの公式ドキュメントを見る".to_string(),
+                                    text: "Rustの公式ドキュメントはこちらから閲覧できます。\nhttps://www.rust-lang.org/ja".to_string(),
+                                }),
+                                SendTemplateActionRequest::Message(SendTemplateMessageActionRequest {
+                                    label: "Rustのサンプルコードを見る".to_string(),
+                                    text: "Rustのサンプルコードを見るなら、Rust by Exampleがおすすめです。\nhttps://doc.rust-jp.rs/rust-by-example-ja/index.html".to_string(),
+                                }),
+                            ],
+                        }),
                     }),
                 ];
                 println!("from_event messages:{:?}", &messages);
@@ -303,7 +324,6 @@ pub enum SendSendingMethodRequest {
     Push,
 }
 
-// TODO Flex Messageの実装
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(tag = "type")]
 #[serde(rename_all = "lowercase")]
@@ -874,7 +894,7 @@ impl From<SendImageCarouselColumn> for NewSendImageCarouselColumn {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "camelCase")]
+#[serde(tag = "type", rename_all = "camelCase")]
 pub enum SendTemplateActionRequest {
     Postback(SendTemplatePostbackActionRequest),
     Message(SendTemplateMessageActionRequest),
